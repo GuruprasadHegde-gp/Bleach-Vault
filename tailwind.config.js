@@ -7,7 +7,8 @@ module.exports = {
    
     extend: {
       colors:{
-        heroColor:'#f9f4f0'
+        heroColor:'#f9f4f0',
+        darkColor:"#121212",
       },
       fontFamily: {
           Roboto:["Roboto","sans-serif"],

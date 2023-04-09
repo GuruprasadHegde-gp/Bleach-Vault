@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import '@rainbow-me/rainbowkit/styles.css';
 import {
+  darkTheme,
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
@@ -40,7 +41,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
      <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
+      <RainbowKitProvider chains={chains} 
+       theme={darkTheme({
+        accentColor: '#121212',
+        accentColorForeground: 'white',
+        borderRadius: 'none',
+        fontStack: 'system',
+        overlayBlur: 'small',
+      })}
+      >
         <App />
       </RainbowKitProvider>
     </WagmiConfig>
