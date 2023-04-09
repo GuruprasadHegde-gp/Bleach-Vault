@@ -4,10 +4,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    colors:{
-      heroColor:'#f9f4f0'
-    },
+   
     extend: {
+      colors:{
+        heroColor:'#f9f4f0'
+      },
       fontFamily: {
           Roboto:["Roboto","sans-serif"],
           Poppins:["Popping","sans-serif"],
