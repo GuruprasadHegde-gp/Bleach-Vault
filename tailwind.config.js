@@ -9,6 +9,8 @@ module.exports = {
       colors:{
         heroColor:'#f9f4f0',
         darkColor:"#121212",
+        yellowColor:"#dcfac6",
+        purpleColor:"#e8bde7",
       },
       fontFamily: {
           Roboto:["Roboto","sans-serif"],
