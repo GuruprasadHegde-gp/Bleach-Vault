@@ -17,7 +17,7 @@ const NavBar = () => {
     return (
       <ul
         ref={dropdownRef}
-        className={`dropdown-menu absolute w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${isClicked ? "block" : "hidden"
+        className={`font-Gothic dropdown-menu absolute w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${isClicked ? "block" : "hidden"
           }`}
         role="menu"
         aria-orientation="vertical"
