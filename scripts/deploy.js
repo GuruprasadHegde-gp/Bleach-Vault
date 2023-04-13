@@ -1,3 +1,5 @@
+//deployed contract address= 0x2FfFf386507EA2420bc293Cd2A7121e7C44d8526
+
 const { ethers } = require("hardhat"); 
 
 async function main() { 
