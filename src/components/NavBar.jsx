@@ -1,6 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { RxHamburgerMenu } from "react-icons/rx";
 import React, { useState, useRef, useEffect } from "react";
+import { useAccount, useBalance } from "wagmi";
 
 const NavBar = () => {
   const [items, addItems] = useState([
@@ -12,6 +13,17 @@ const NavBar = () => {
   ]);
   const [isClicked, setClick] = useState(false);
   const dropdownRef = useRef(null);
+
+
+//hooks
+const account=useAccount();
+// console.log(account.address);
+const balance=useBalance({
+  address:`${account.address}`,
+})
+// console.log(balance?.data.formatted)
+
+
 
   const renderItems = () => {
     return (
