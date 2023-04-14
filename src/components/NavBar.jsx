@@ -2,6 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { RxHamburgerMenu } from "react-icons/rx";
 import React, { useState, useRef, useEffect } from "react";
 import { useAccount, useBalance } from "wagmi";
+import { Link } from "react-router-dom";
 
 const NavBar =
   ({ onAnimationClick, onMusicClick, onEbooksClick, onArtClick, onPodcastClick, onArticleClick, onEducationClick, onFilmClick }) => {
@@ -22,13 +23,13 @@ const NavBar =
 
 
 
-//hooks
-const account=useAccount();
-// console.log(account.address);
-const balance=useBalance({
-  address:`${account.address}`,
-})
-// console.log(balance?.data.formatted)
+    //hooks
+    const account = useAccount();
+    // console.log(account.address);
+    const balance = useBalance({
+      address: `${account.address}`,
+    })
+    // console.log(balance?.data.formatted)
 
     const onItemClick = (item) => {
       const onClick = functionMap[item];
@@ -102,6 +103,11 @@ const balance=useBalance({
             </button>
             {isClicked && renderItems()}
           </li>
+          <Link to="/dashboard">
+            <button className="border-b-2 border-white hover:border-pink-500 transition-border duration-700 hover:scale-110">
+              Dashboard
+            </button>
+          </Link>
         </ul>
         <div className="border-l-2 border-black px-4 font-Gothic h-full">
           <ConnectButton />
