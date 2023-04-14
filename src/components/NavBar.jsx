@@ -3,6 +3,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import React, { useState, useRef, useEffect } from "react";
 import { useAccount, useBalance } from "wagmi";
 import { Link } from "react-router-dom";
+import { async } from "q";
 
 const NavBar =
   ({ onAnimationClick, onMusicClick, onEbooksClick, onArtClick, onPodcastClick, onArticleClick, onEducationClick, onFilmClick }) => {
@@ -23,12 +24,16 @@ const NavBar =
 
 
 
+    const dashboardHandle = () => {
+     alert("Connect wallet to proceed");
+    }
+
     //hooks
     const account = useAccount();
     // console.log(account.address);
-    const balance = useBalance({
-      address: `${account.address}`,
-    })
+    // const balance = useBalance({
+    //   address: `${account.address}`,
+    // })
     // console.log(balance?.data.formatted)
 
     const onItemClick = (item) => {
@@ -103,11 +108,18 @@ const NavBar =
             </button>
             {isClicked && renderItems()}
           </li>
+           { account.isConnected ?
           <Link to="/dashboard">
             <button className="border-b-2 border-white hover:border-pink-500 transition-border duration-700 hover:scale-110">
               Dashboard
             </button>
-          </Link>
+          </Link>:
+           <button onClick={dashboardHandle} className="border-b-2 border-white hover:border-pink-500 transition-border duration-700 hover:scale-110">
+           Dashboard
+         </button>
+
+          }
+
         </ul>
         <div className="border-l-2 border-black px-4 font-Gothic h-full">
           <ConnectButton />
