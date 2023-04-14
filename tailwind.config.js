@@ -13,6 +13,8 @@ module.exports = {
         articleColor: "#E2442F",
         filmColor: "#F1F333",
         educationColor: "#23A094",
+        yellowColor: "#dcfac6",
+        purpleColor: "#e8bde7",
       },
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"],

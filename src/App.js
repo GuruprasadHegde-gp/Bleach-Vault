@@ -12,6 +12,7 @@ import Films from "./components/Films";
 import Podcasts from "./components/Podcasts";
 import ArtDrawing from "./components/ArtDrawing";
 import ScrollToTopButton from "./components/ScrollToTop";
+import Dashboard from "./Pages/Dashboard";
 import {
   Link,
   Element,
@@ -118,6 +119,7 @@ const App = () => {
         <Films />
       </div>
       <ScrollToTopButton />
+      <Dashboard />
       <Footer />
     </>
   );

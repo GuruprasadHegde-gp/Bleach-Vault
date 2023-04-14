@@ -1,6 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { RxHamburgerMenu } from "react-icons/rx";
 import React, { useState, useRef, useEffect } from "react";
+import { useAccount, useBalance } from "wagmi";
 
 const NavBar =
   ({ onAnimationClick, onMusicClick, onEbooksClick, onArtClick, onPodcastClick, onArticleClick, onEducationClick, onFilmClick }) => {
@@ -19,6 +20,16 @@ const NavBar =
       Education: onEducationClick,
     };
 
+
+
+//hooks
+const account=useAccount();
+// console.log(account.address);
+const balance=useBalance({
+  address:`${account.address}`,
+})
+// console.log(balance?.data.formatted)
+
     const onItemClick = (item) => {
       const onClick = functionMap[item];
       if (onClick) {
@@ -33,7 +44,7 @@ const NavBar =
       return (
         <ul
           ref={dropdownRef}
-          className={`dropdown-menu absolute w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${isClicked ? "block" : "hidden"
+          className={`font-Gothic dropdown-menu absolute w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${isClicked ? "block" : "hidden"
             }`}
           role="menu"
           aria-orientation="vertical"
