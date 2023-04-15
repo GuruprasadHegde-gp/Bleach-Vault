@@ -9,15 +9,47 @@ import musicLogo from "../images/music-logo.png";
 import podcatLogo from "../images/podcast-logo.png";
 import filmsLogo from "../images/films-logo.png";
 
+
+import { contractAddress } from "./contractConfig";
+import { contractAbi } from "./contractConfig";
+import { File, Web3Storage } from "web3.storage";
+import { ethers } from "ethers";
+import web3modal from "web3modal";
+import axios from "axios";
+// import { useMoralis } from 'react-moralis';
+
+
+
+
+
+
+
+
 const Publish = () => {
-    const [FormCredentials, setFormCredentials] = useState({
-        name: " ",
-        price: " ",
-        category: " ",
-        supply: " ",
-        coverImg: null,
-        content: null,
-    });
+   
+  
+
+    const [isLoadingBarOfCoverActive, setIsLoadingBarOfCoverActive] = useState(false);
+    const [isLoadingBarOfContentActive, setIsLoadingBarOfContentActive] = useState(false);
+    const [isMinting, setIsMinting] = useState(false);
+
+
+    // const [FormCredentials, setFormCredentials] = useState({
+    //     name: " ",
+    //     price: " ",
+    //     category: " ",
+    //     supply: " ",
+    //     coverImg: null,
+    //     content: null,
+    // });
+    const [formInput, setFormInput] = useState({
+        name:"",
+        price:"",
+        category:"",
+        supply:"",
+        coverImageURI:null,
+        contentURI:null
+      });
 
     const [isAnimationActive, setIsAnimationActive] = useState(false);
     const [isMusicActive, setIsMusicActive] = useState(false);
@@ -37,10 +69,14 @@ const Publish = () => {
         setIsDrawingActive(false);
         setIsArticlesActive(false);
         setIsAnimationActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Animation",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Animation",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Animation'
+          })
     };
 
     const musicClickHandle = () => {
@@ -52,10 +88,14 @@ const Publish = () => {
         setIsDrawingActive(false);
         setIsArticlesActive(false);
         setIsMusicActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Music",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Music",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Music'
+          })
     };
 
     const ebooksClickHandle = () => {
@@ -67,10 +107,14 @@ const Publish = () => {
         setIsDrawingActive(false);
         setIsArticlesActive(false);
         setIsEbooksActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Ebooks",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Ebooks",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Ebooks'
+          })
     };
 
     const podcastClickHandle = () => {
@@ -82,10 +126,14 @@ const Publish = () => {
         setIsDrawingActive(false);
         setIsArticlesActive(false);
         setIsPodcastActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Podcast",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Podcast",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Podcast'
+          })
     };
 
     const educationClickHandle = () => {
@@ -97,10 +145,14 @@ const Publish = () => {
         setIsDrawingActive(false);
         setIsArticlesActive(false);
         setIsEducationActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Education",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Education",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Education'
+          })
     };
 
     const filmsClickHandle = () => {
@@ -112,10 +164,14 @@ const Publish = () => {
         setIsDrawingActive(false);
         setIsArticlesActive(false);
         setIsFilmsActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Films",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Films",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Films'
+          })
     };
 
     const drawingClickHandle = () => {
@@ -127,10 +183,14 @@ const Publish = () => {
         setIsFilmsActive(false);
         setIsArticlesActive(false);
         setIsDrawingActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Art",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Art",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Art'
+          })
     };
 
     const articlesClickHandle = () => {
@@ -142,15 +202,122 @@ const Publish = () => {
         setIsFilmsActive(false);
         setIsDrawingActive(false);
         setIsArticlesActive(true);
-        setFormCredentials({
-            ...FormCredentials,
-            category: "Articles",
-        });
+        // setFormCredentials({
+        //     ...FormCredentials,
+        //     category: "Articles",
+        // });
+        setFormInput({
+            ...formInput,
+            category: 'Articles'
+          })
     };
 
-    console.log(FormCredentials.name);
-    console.log(FormCredentials.supply);
-    console.log(FormCredentials.price);
+    // console.log(FormCredentials.name);
+    // console.log(FormCredentials.supply);
+    // console.log(FormCredentials.price);
+
+
+
+function getAccessToken(){
+    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEE3RTU2MzI3ZDAzQzc0NEQyZjBlMGIxRDY4NmEzMDQ3NkNkZDliQzEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzQ3NTk4NjI1NDEsIm5hbWUiOiJGaWxlU3RvcmFnZSJ9.DYm2RFJANwdblbi1saO_PJmavKBGkAzwHh_qjTTcseU';
+}
+
+function makeStorageClient () {
+    return new Web3Storage({ token: getAccessToken() })
+  }
+
+  const coverHandle = async () => {
+    const fileInput = document.getElementById('cover');
+    const filePath = fileInput.files[0].name;
+    setIsLoadingBarOfCoverActive(true);
+    const coverCID = await uploadToIPFS(fileInput.files,0);
+
+    setFormInput({
+      ...formInput,
+      coverImageURI: `https://ipfs.io/ipfs/${coverCID}/${filePath}`
+    })
+  }
+  const contentHandle = async () => {
+    const fileInput = document.getElementById('content');
+    const filePath = fileInput.files[0].name;
+    setIsLoadingBarOfContentActive(true);
+    const contentCID = await uploadToIPFS(fileInput.files,1);
+
+    setFormInput({
+      ...formInput,
+      contentURI: `https://ipfs.io/ipfs/${contentCID}/${filePath}`
+    })
+  }
+
+  const uploadToIPFS = async (files, flag) => {
+    const client = makeStorageClient()
+    const cid = await client.put(files)
+    setIsLoadingBarOfCoverActive(false);
+    setIsLoadingBarOfContentActive(false);
+
+    // fire toast only for cover image and content.
+    if(flag==0 || flag==1){
+    //   toast.success("Uploaded to IPFS", {
+    //     position: toast.POSITION.TOP_CENTER
+    //   });
+    alert("uploaded to ipfs");
+    }
+    console.log(cid);//content id to fetch the image
+    return cid;
+  }
+
+
+//getting the json data of the image
+
+const metadata = async () => {
+    const {name, price, coverImageURI, contentURI} = formInput;
+    if (!name || !price || !coverImageURI || !contentURI) return;
+    const data = JSON.stringify({ name, coverImageURI, contentURI });
+    const files = [
+      new File([data], 'data.json')
+    ]
+    const metaCID = await uploadToIPFS(files);
+    return `https://ipfs.io/ipfs/${metaCID}/data.json`
+  }
+
+  //minting
+ 
+  const mintToken = async () => {
+    setIsMinting(true);
+    const uri = await metadata();
+    const modal = new web3modal({
+      network: "mumbai",
+      cacheProvider: true,
+  });
+  const connection = await modal.connect();
+  const provider = new ethers.providers.Web3Provider(connection);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(
+      contractAddress,
+      contractAbi.abi,
+      signer
+  );
+  const price = ethers.utils.parseEther(formInput.price);
+  console.log(price);
+  const supp=parseInt(formInput.supply);
+  const publish = await contract.createToken(uri,supp, price, formInput.category, {
+      gasLimit: 1000000,
+  })
+  await publish.wait()
+    .then( () => {
+    //   toast.success("Token Minted Successfully.", {
+    //   position: toast.POSITION.TOP_CENTER
+    //   });
+    alert("Token Minted successfully")
+      setIsMinting(false);
+    }).catch( () => {
+    //   toast.error("Failed to mint token.", {
+    //     position: toast.POSITION.TOP_CENTER
+    //   });
+    alert("unexpected failure");
+       setIsMinting(false);
+    })
+  }
     return (
         <>
             <div className="bg-educationColor font-Gothic text-lg h-36 rounded-md m-auto flex items-center px-10 border border-black mt-12 w-screen">
@@ -174,8 +341,12 @@ const Publish = () => {
                         type="text"
                         name="name"
                         onChange={(event) => {
-                            setFormCredentials({
-                                ...FormCredentials,
+                            // setFormCredentials({
+                            //     ...FormCredentials,
+                            //     name: event.target.value,
+                            // });
+                            setFormInput({
+                                ...formInput,
                                 name: event.target.value,
                             });
                         }}
@@ -309,8 +480,12 @@ const Publish = () => {
                                 required
                                 className=" mt-2 rounded-lg w-96  text-left px-5"
                                 onChange={(event) => {
-                                    setFormCredentials({
-                                        ...FormCredentials,
+                                    // setFormCredentials({
+                                    //     ...FormCredentials,
+                                    //     price: event.target.value
+                                    // })
+                                    setFormInput({
+                                        ...formInput,
                                         price: event.target.value
                                     })
                                 }}
@@ -324,8 +499,12 @@ const Publish = () => {
                                 required
                                 className=" mt-2 rounded-lg w-96 text-left px-5"
                                 onChange={(event) => {
-                                    setFormCredentials({
-                                        ...FormCredentials,
+                                    // setFormCredentials({
+                                    //     ...FormCredentials,
+                                    //     supply: event.target.value
+                                    // })
+                                    setFormInput({
+                                        ...formInput,
                                         supply: event.target.value
                                     })
                                 }}
@@ -337,7 +516,9 @@ const Publish = () => {
                             <p>Cover Image</p>
                             <div className=" mt-8 w-full h-96 border-dashed border-black border-2 rounded-lg bg-white flex flex-col justify-center items-center">
                                 <div className=" flex items-end">
-                                    <input type="file" id="cover" className=" ml-24" />
+                                    <input type="file" id="cover" className=" ml-24" 
+                                    onChange={coverHandle}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -345,13 +526,15 @@ const Publish = () => {
                             <p>Content</p>
                             <div className=" mt-8 w-full h-96 border-dashed border-black border-2 rounded-lg bg-white flex flex-col justify-center items-center">
                                 <div className=" flex items-end">
-                                    <input type="file" id="cover" className=" ml-24" />
+                                    <input type="file" //id="cover" 
+                                    id="content"
+                                    className=" ml-24" onChange={contentHandle} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button className=" font-Gothic bg-black text-white  w-96 rounded-lg mb-9 h-10 ml-96">
+                <button onClick={mintToken} className=" font-Gothic bg-black text-white  w-96 rounded-lg mb-9 h-10 ml-96">
                     Mint Token
                 </button>
             </div>
