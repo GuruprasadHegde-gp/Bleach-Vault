@@ -81,7 +81,11 @@ const Dashboard = () => {
                             Inventory
                         </button>
                     </div>
-                            
+                    <div>
+                        {
+                            inventoryClicked && <Inventory />
+                        }
+                    </div>
 
                 </div >
             </div >
@@ -98,12 +102,14 @@ const Dashboard = () => {
                         inventoryClicked && <Inventory />
                     }
                 </div>
+
+                <div>
+                    {
+                        productsClicked && <Products />
+                    }
+                </div>
             </div>
-            <div>
-                {
-                    productsClicked && <Products/>
-                }
-            </div>
+
 
         </div>
     );
