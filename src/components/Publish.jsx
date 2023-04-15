@@ -8,8 +8,6 @@ import ebookLogo from "../images/ebook-logo.png";
 import musicLogo from "../images/music-logo.png";
 import podcatLogo from "../images/podcast-logo.png";
 import filmsLogo from "../images/films-logo.png";
-
-
 import { contractAddress } from "./contractConfig";
 import { contractAbi } from "./contractConfig";
 import { File, Web3Storage } from "web3.storage";
@@ -26,8 +24,8 @@ import axios from "axios";
 
 
 const Publish = () => {
-   
-  
+
+
 
     const [isLoadingBarOfCoverActive, setIsLoadingBarOfCoverActive] = useState(false);
     const [isLoadingBarOfContentActive, setIsLoadingBarOfContentActive] = useState(false);
@@ -43,13 +41,13 @@ const Publish = () => {
     //     content: null,
     // });
     const [formInput, setFormInput] = useState({
-        name:"",
-        price:"",
-        category:"",
-        supply:"",
-        coverImageURI:null,
-        contentURI:null
-      });
+        name: "",
+        price: "",
+        category: "",
+        supply: "",
+        coverImageURI: null,
+        contentURI: null
+    });
 
     const [isAnimationActive, setIsAnimationActive] = useState(false);
     const [isMusicActive, setIsMusicActive] = useState(false);
@@ -76,7 +74,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Animation'
-          })
+        })
     };
 
     const musicClickHandle = () => {
@@ -95,7 +93,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Music'
-          })
+        })
     };
 
     const ebooksClickHandle = () => {
@@ -114,7 +112,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Ebooks'
-          })
+        })
     };
 
     const podcastClickHandle = () => {
@@ -133,7 +131,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Podcast'
-          })
+        })
     };
 
     const educationClickHandle = () => {
@@ -152,7 +150,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Education'
-          })
+        })
     };
 
     const filmsClickHandle = () => {
@@ -171,7 +169,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Films'
-          })
+        })
     };
 
     const drawingClickHandle = () => {
@@ -190,7 +188,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Art'
-          })
+        })
     };
 
     const articlesClickHandle = () => {
@@ -209,7 +207,7 @@ const Publish = () => {
         setFormInput({
             ...formInput,
             category: 'Articles'
-          })
+        })
     };
 
     // console.log(FormCredentials.name);
@@ -218,106 +216,106 @@ const Publish = () => {
 
 
 
-function getAccessToken(){
-    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEE3RTU2MzI3ZDAzQzc0NEQyZjBlMGIxRDY4NmEzMDQ3NkNkZDliQzEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzQ3NTk4NjI1NDEsIm5hbWUiOiJGaWxlU3RvcmFnZSJ9.DYm2RFJANwdblbi1saO_PJmavKBGkAzwHh_qjTTcseU';
-}
-
-function makeStorageClient () {
-    return new Web3Storage({ token: getAccessToken() })
-  }
-
-  const coverHandle = async () => {
-    const fileInput = document.getElementById('cover');
-    const filePath = fileInput.files[0].name;
-    setIsLoadingBarOfCoverActive(true);
-    const coverCID = await uploadToIPFS(fileInput.files,0);
-
-    setFormInput({
-      ...formInput,
-      coverImageURI: `https://ipfs.io/ipfs/${coverCID}/${filePath}`
-    })
-  }
-  const contentHandle = async () => {
-    const fileInput = document.getElementById('content');
-    const filePath = fileInput.files[0].name;
-    setIsLoadingBarOfContentActive(true);
-    const contentCID = await uploadToIPFS(fileInput.files,1);
-
-    setFormInput({
-      ...formInput,
-      contentURI: `https://ipfs.io/ipfs/${contentCID}/${filePath}`
-    })
-  }
-
-  const uploadToIPFS = async (files, flag) => {
-    const client = makeStorageClient()
-    const cid = await client.put(files)
-    setIsLoadingBarOfCoverActive(false);
-    setIsLoadingBarOfContentActive(false);
-
-    // fire toast only for cover image and content.
-    if(flag==0 || flag==1){
-    //   toast.success("Uploaded to IPFS", {
-    //     position: toast.POSITION.TOP_CENTER
-    //   });
-    alert("uploaded to ipfs");
+    function getAccessToken() {
+        return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEE3RTU2MzI3ZDAzQzc0NEQyZjBlMGIxRDY4NmEzMDQ3NkNkZDliQzEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzQ3NTk4NjI1NDEsIm5hbWUiOiJGaWxlU3RvcmFnZSJ9.DYm2RFJANwdblbi1saO_PJmavKBGkAzwHh_qjTTcseU';
     }
-    console.log(cid);//content id to fetch the image
-    return cid;
-  }
+
+    function makeStorageClient() {
+        return new Web3Storage({ token: getAccessToken() })
+    }
+
+    const coverHandle = async () => {
+        const fileInput = document.getElementById('cover');
+        const filePath = fileInput.files[0].name;
+        setIsLoadingBarOfCoverActive(true);
+        const coverCID = await uploadToIPFS(fileInput.files, 0);
+
+        setFormInput({
+            ...formInput,
+            coverImageURI: `https://ipfs.io/ipfs/${coverCID}/${filePath}`
+        })
+    }
+    const contentHandle = async () => {
+        const fileInput = document.getElementById('content');
+        const filePath = fileInput.files[0].name;
+        setIsLoadingBarOfContentActive(true);
+        const contentCID = await uploadToIPFS(fileInput.files, 1);
+
+        setFormInput({
+            ...formInput,
+            contentURI: `https://ipfs.io/ipfs/${contentCID}/${filePath}`
+        })
+    }
+
+    const uploadToIPFS = async (files, flag) => {
+        const client = makeStorageClient()
+        const cid = await client.put(files)
+        setIsLoadingBarOfCoverActive(false);
+        setIsLoadingBarOfContentActive(false);
+
+        // fire toast only for cover image and content.
+        if (flag == 0 || flag == 1) {
+            //   toast.success("Uploaded to IPFS", {
+            //     position: toast.POSITION.TOP_CENTER
+            //   });
+            alert("uploaded to ipfs");
+        }
+        console.log(cid);//content id to fetch the image
+        return cid;
+    }
 
 
-//getting the json data of the image
+    //getting the json data of the image
 
-const metadata = async () => {
-    const {name, price, coverImageURI, contentURI} = formInput;
-    if (!name || !price || !coverImageURI || !contentURI) return;
-    const data = JSON.stringify({ name, coverImageURI, contentURI });
-    const files = [
-      new File([data], 'data.json')
-    ]
-    const metaCID = await uploadToIPFS(files);
-    return `https://ipfs.io/ipfs/${metaCID}/data.json`
-  }
+    const metadata = async () => {
+        const { name, price, coverImageURI, contentURI } = formInput;
+        if (!name || !price || !coverImageURI || !contentURI) return;
+        const data = JSON.stringify({ name, coverImageURI, contentURI });
+        const files = [
+            new File([data], 'data.json')
+        ]
+        const metaCID = await uploadToIPFS(files);
+        return `https://ipfs.io/ipfs/${metaCID}/data.json`
+    }
 
-  //minting
- 
-  const mintToken = async () => {
-    setIsMinting(true);
-    const uri = await metadata();
-    const modal = new web3modal({
-      network: "mumbai",
-      cacheProvider: true,
-  });
-  const connection = await modal.connect();
-  const provider = new ethers.providers.Web3Provider(connection);
-  const signer = provider.getSigner();
-  const contract = new ethers.Contract(
-      contractAddress,
-      contractAbi.abi,
-      signer
-  );
-  const price = ethers.utils.parseEther(formInput.price);
-  console.log(price);
-  const supp=parseInt(formInput.supply);
-  const publish = await contract.createToken(uri,supp, price, formInput.category, {
-      gasLimit: 1000000,
-  })
-  await publish.wait()
-    .then( () => {
-    //   toast.success("Token Minted Successfully.", {
-    //   position: toast.POSITION.TOP_CENTER
-    //   });
-    alert("Token Minted successfully")
-      setIsMinting(false);
-    }).catch( () => {
-    //   toast.error("Failed to mint token.", {
-    //     position: toast.POSITION.TOP_CENTER
-    //   });
-    alert("unexpected failure");
-       setIsMinting(false);
-    })
-  }
+    //minting
+
+    const mintToken = async () => {
+        setIsMinting(true);
+        const uri = await metadata();
+        const modal = new web3modal({
+            network: "mumbai",
+            cacheProvider: true,
+        });
+        const connection = await modal.connect();
+        const provider = new ethers.providers.Web3Provider(connection);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(
+            contractAddress,
+            contractAbi.abi,
+            signer
+        );
+        const price = ethers.utils.parseEther(formInput.price);
+        console.log(price);
+        console.log(formInput.supply);
+        const publish = await contract.createToken(uri, formInput.supply, price, formInput.category, {
+            gasLimit: 1000000,
+        })
+        await publish.wait()
+            .then(() => {
+                //   toast.success("Token Minted Successfully.", {
+                //   position: toast.POSITION.TOP_CENTER
+                //   });
+                alert("Token Minted successfully")
+                setIsMinting(false);
+            }).catch(() => {
+                //   toast.error("Failed to mint token.", {
+                //     position: toast.POSITION.TOP_CENTER
+                //   });
+                alert("unexpected failure");
+                setIsMinting(false);
+            })
+    }
     return (
         <>
             <div className="bg-educationColor font-Gothic text-lg h-36 rounded-md m-auto flex items-center px-10 border border-black mt-12 w-screen">
@@ -516,8 +514,8 @@ const metadata = async () => {
                             <p>Cover Image</p>
                             <div className=" mt-8 w-full h-96 border-dashed border-black border-2 rounded-lg bg-white flex flex-col justify-center items-center">
                                 <div className=" flex items-end">
-                                    <input type="file" id="cover" className=" ml-24" 
-                                    onChange={coverHandle}
+                                    <input type="file" id="cover" className=" ml-24"
+                                        onChange={coverHandle}
                                     />
                                 </div>
                             </div>
@@ -527,8 +525,8 @@ const metadata = async () => {
                             <div className=" mt-8 w-full h-96 border-dashed border-black border-2 rounded-lg bg-white flex flex-col justify-center items-center">
                                 <div className=" flex items-end">
                                     <input type="file" //id="cover" 
-                                    id="content"
-                                    className=" ml-24" onChange={contentHandle} />
+                                        id="content"
+                                        className=" ml-24" onChange={contentHandle} />
                                 </div>
                             </div>
                         </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { BigHead } from '@bigheads/core'
 import Publish from "../components/Publish";
+import Inventory from "../components/Inventory";
 const Dashboard = () => {
     const [publishClicked, SetPublishClicked] = useState(true)
     const [productsClicked, SetProductsClicked] = useState(false)
@@ -90,7 +91,13 @@ const Dashboard = () => {
                 {
                     publishClicked && <Publish />
                 }
+                <div>
+                    {
+                        inventoryClicked && <Inventory />
+                    }
+                </div>
             </div>
+
         </div>
     );
 };
