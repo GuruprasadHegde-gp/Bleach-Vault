@@ -1,4 +1,5 @@
 import React from 'react'
+import { contractAddress } from './contractConfig';
 
 const Inventory = () => {
     const ALCHEMY_API=process.env.ALCHEMY_KEY;
@@ -17,9 +18,7 @@ const config = {
 axios(config)
     .then(response => console.log(response['data']))
     .catch(error => console.log('error', error));
-
-
-
+    
   return (
     <div>idu Inventory</div>
   )
