@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import { BigHead } from '@bigheads/core'
 import Publish from "../components/Publish";
-import Inventory from "../components/Inventory";
+import Inventory from "../components/Products";
+import Products from "../components/Products";
 const Dashboard = () => {
     const [publishClicked, SetPublishClicked] = useState(true)
     const [productsClicked, SetProductsClicked] = useState(false)
@@ -80,11 +81,12 @@ const Dashboard = () => {
                             Inventory
                         </button>
                     </div>
-
+                            
 
                 </div >
             </div >
             <div className=" absolute left-80 top-68 right-0 overflow-x-hidden flex flex-col">
+
                 <div className=" font-Gothic w-screen text-black h-24 bg-heroColor  border-b-2 border-black text-4xl flex justify-center items-center ">
                     <p className=" mr-72">Hola!! Welcome To the Vault</p>
                 </div>
@@ -96,6 +98,11 @@ const Dashboard = () => {
                         inventoryClicked && <Inventory />
                     }
                 </div>
+            </div>
+            <div>
+                {
+                    productsClicked && <Products/>
+                }
             </div>
 
         </div>

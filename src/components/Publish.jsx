@@ -316,6 +316,44 @@ const Publish = () => {
                 setIsMinting(false);
             })
     }
+  //minting
+ 
+  const mintToken = async () => {
+    setIsMinting(true);
+    const uri = await metadata();
+    const modal = new web3modal({
+      network: "mumbai",
+      cacheProvider: true,
+  });
+  const connection = await modal.connect();
+  const provider = new ethers.providers.Web3Provider(connection);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(
+      contractAddress,
+      contractAbi.abi,
+      signer
+  );
+  const price = ethers.utils.parseEther(formInput.price);
+  console.log(price);
+//   const supp=parseInt(formInput.supply);//normal
+  const publish = await contract.createToken(uri,formInput.supply, price, formInput.category, {
+      gasLimit: 1000000,
+  })
+  await publish.wait()
+    .then( () => {
+    //   toast.success("Token Minted Successfully.", {
+    //   position: toast.POSITION.TOP_CENTER
+    //   });
+    alert("Token Minted successfully")
+      setIsMinting(false);
+    }).catch( () => {
+    //   toast.error("Failed to mint token.", {
+    //     position: toast.POSITION.TOP_CENTER
+    //   });
+    alert("unexpected failure");
+       setIsMinting(false);
+    })
+  }
     return (
         <>
             <div className="bg-educationColor font-Gothic text-lg h-36 rounded-md m-auto flex items-center px-10 border border-black mt-12 w-screen">
