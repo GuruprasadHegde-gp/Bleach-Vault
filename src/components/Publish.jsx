@@ -299,7 +299,7 @@ const metadata = async () => {
   );
   const price = ethers.utils.parseEther(formInput.price);
   console.log(price);
-//   const supp=parseInt(formInput.supply);
+//   const supp=parseInt(formInput.supply);//normal
   const publish = await contract.createToken(uri,formInput.supply, price, formInput.category, {
       gasLimit: 1000000,
   })
